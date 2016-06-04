@@ -5,6 +5,7 @@
 
 SHELL_PATH=$(dirname $0)
 mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
+mkdir -p /var/spool/nginx
 
 
 
