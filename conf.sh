@@ -13,7 +13,7 @@ apt-get update
 apt-get install git
 git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
 cd /opt/letsencrypt
-sudo git pull
+git pull
 
 
 
