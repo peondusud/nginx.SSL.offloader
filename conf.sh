@@ -7,6 +7,8 @@ SHELL_PATH=$(dirname $0)
 mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 
+
+mkdir -p /etc/nginx/ssl/
 openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
 
 
