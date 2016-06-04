@@ -62,5 +62,5 @@ done
 service nginx reload
 " > /etc/cron.monthly/renew_certs
 
-
-/opt//letsencrypt-auto --agree-tos --config /etc/letsencrypt/configs/mydomain.conf certonly 
+mkdir -p /var/www/letsencrypt
+/opt/letsencrypt/letsencrypt-auto --agree-tos --config /etc/letsencrypt/configs/mydomain.conf certonly 
