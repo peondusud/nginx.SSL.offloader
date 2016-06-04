@@ -1,7 +1,7 @@
 #!/bin/bash
 
  mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
- rm -rf /etc/nginx/snippets
+ rm -rf /etc/nginx/snippets /etc/nginx/sites-available/default
 
 SHELL_PATH=$(dirname $0)
 mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
