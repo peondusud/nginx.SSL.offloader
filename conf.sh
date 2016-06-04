@@ -7,6 +7,7 @@ SHELL_PATH=$(dirname $0)
 mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 
+openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
 
 
 # let's encrypt part
@@ -15,6 +16,7 @@ apt-get install git
 git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
 cd /opt/letsencrypt
 git pull
+
 
 
 
@@ -48,15 +50,15 @@ authenticator = webroot
 webroot-path = /var/www/letsencrypt
 " > /etc/letsencrypt/configs/mydomain.conf
 
-./letsencrypt-auto --agree-tos --config /etc/letsencrypt/configs/mydomain.conf certonly 
+
 
 echo "
 #!/bin/sh
-cd /root/letsencrypt
 for conf in $(ls /etc/letsencrypt/configs/*.conf); do
-  ./letsencrypt-auto --renew --config "$conf" certonly
+  /opt/letsencrypt/letsencrypt-auto --renew --config "$conf" certonly
 done
 service nginx reload
 " > /etc/cron.monthly/renew_certs
 
-ls /etc/letsencrypt/live/
+
+/opt//letsencrypt-auto --agree-tos --config /etc/letsencrypt/configs/mydomain.conf certonly 
