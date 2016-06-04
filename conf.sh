@@ -4,7 +4,7 @@
  rm -rf /etc/nginx/snippets
 
 SHELL_PATH=$(dirname $0)
-mv ${SHELL_PATH}/nginx/* /etc/nginx/
+mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
 
 
 
