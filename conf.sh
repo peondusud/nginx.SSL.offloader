@@ -6,7 +6,7 @@ MYMAIL=webmaster@${MYDOMAIN}
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 rm -rf /etc/nginx/snippets /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-cp -f ${SHELL_PATH}/nginx/* /etc/nginx/
+cp -rf ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 mkdir -p /var/www/letsencrypt
 mkdir -p /etc/nginx/ssl
