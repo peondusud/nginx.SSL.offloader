@@ -42,7 +42,7 @@ for conf in $(ls /etc/letsencrypt/configs/*.conf); do
 done
 service nginx reload' > /etc/cron.monthly/renew_certs
 
-/opt/letsencrypt/letsencrypt-auto --agree-tos --config /etc/letsencrypt/configs/${MYDOMAIN}.conf certonly 
+/opt/letsencrypt/letsencrypt-auto certonly --config /etc/letsencrypt/configs/${MYDOMAIN}.conf  
 echo "Let's encrypt Certs will be save in /etc/letsencrypt/live/"
 
 # enable nginx ssl
