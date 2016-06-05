@@ -33,7 +33,7 @@ sed -i 's|^\(ssl\s*\)on;$|\1off;|' /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|^\(ssl_certificate\)|#\1|g" /etc/nginx/conf.d/sslproxy.conf
 ln -s /etc/nginx/sites-available/letsencrypt.conf /etc/nginx/sites-enabled/letsencrypt.conf;
 grep "ssl " /etc/nginx/conf.d/sslproxy.conf
-service nginx reload;
+service nginx restart;
 
 # Script to renew generated certs
 echo '#!/bin/sh
