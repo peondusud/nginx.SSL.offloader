@@ -6,7 +6,7 @@ MYMAIL=webmaster@${MYDOMAIN}
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 rm -rf /etc/nginx/snippets /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
+cp -f ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 mkdir -p /var/www/letsencrypt
 mkdir -p /etc/nginx/ssl
@@ -23,7 +23,7 @@ fi
 apt-get install git
 git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
 mkdir -p /etc/letsencrypt/configs
-mv ${SHELL_PATH}/letsencrypt.ini /etc/letsencrypt/configs/${MYDOMAIN}.conf
+cp ${SHELL_PATH}/letsencrypt.ini /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<mail>|${MYMAIL}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/conf.d/sslproxy.conf
