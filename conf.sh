@@ -10,8 +10,13 @@ mv -f ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 mkdir -p /var/www/letsencrypt
 mkdir -p /etc/nginx/ssl
-openssl dhparam -out /etc/nginx/ssl/dhparam.pem 1024
-#openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
+
+if [ ! -f /etc/nginx/ssl/dhparam.pem ]; then
+    openssl dhparam -out /etc/nginx/ssl/dhparam.pem 1024
+    #openssl dhparam -out /etc/nginx/ssl/dhparam.pem 4096
+else
+    openssl dhparam -inform PEM -in /etc/nginx/ssl/dhparam.pem -check
+fi
 
 
 # Let's encrypt part
