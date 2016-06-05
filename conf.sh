@@ -29,7 +29,7 @@ sed -i "s|<mail>|${MYMAIL}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/sites-available/backend.conf
 # disable nginx ssl
-sed -i "s|^\(ssl .*\)on;$|\1off;|" /etc/nginx/conf.d/sslproxy.conf
+sed -i 's|^\(ssl .*\)on;$|\1off;|' /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|^\(ssl_certificate\)|#\1|g" /etc/nginx/conf.d/sslproxy.conf
 ln -s /etc/nginx/sites-available/letsencrypt.conf /etc/nginx/sites-enabled/letsencrypt.conf;
 service nginx reload;
