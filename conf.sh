@@ -55,3 +55,6 @@ service nginx reload
 sed -i 's|^\(server = .*staging.*\)$|#\1|' /etc/letsencrypt/configs/${MYDOMAIN}.conf
 #uncoment official server
 sed -i 's|^#\(server = .*v01.*\)$|\1|' etc/letsencrypt/configs/${MYDOMAIN}.conf
+# generate certs
+/opt/letsencrypt/letsencrypt-auto certonly --config /etc/letsencrypt/configs/${MYDOMAIN}.conf
+service nginx reload
