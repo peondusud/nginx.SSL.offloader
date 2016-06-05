@@ -47,5 +47,5 @@ echo "Let's encrypt Certs will be save in /etc/letsencrypt/live/"
 
 # enable nginx ssl
 sed -i "s|^\(ssl .*\)off;$|\1on;|"  /etc/nginx/conf.d/sslproxy.conf
-#ln -s /etc/nginx/sites-available/backend.conf /etc/nginx/sites-enabled/backend.conf
-#service nginx reload
+ln -s /etc/nginx/sites-available/backend.conf /etc/nginx/sites-enabled/backend.conf
+service nginx reload
