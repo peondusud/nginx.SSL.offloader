@@ -20,6 +20,7 @@ git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
 mkdir -p /etc/letsencrypt/configs
 mv ${SHELL_PATH}/letsencrypt.ini /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
+sed -i "s|<mail>|${MYMAIL}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/sites-available/backend.conf
 # disable nginx ssl
