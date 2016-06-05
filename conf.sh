@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SHELL_PATH=$(dirname $0)
-MYDOMAIN=peon.org
+MYDOMAIN=peon.peon.org
 MYMAIL=webmaster@${MYDOMAIN}
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
@@ -30,8 +30,9 @@ sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/sites-available/backend.conf
 # disable nginx ssl
 sed -i "s|^\(ssl .*\)on;$|\1off;|" /etc/nginx/conf.d/sslproxy.conf
-ln -s /etc/nginx/sites-available/letsencrypt.conf /etc/nginx/sites-enabled/letsencrypt.conf
-service nginx reload
+sed -i "s|^\(ssl_certificate\)|#\1|g" /etc/nginx/conf.d/sslproxy.conf
+ln -s /etc/nginx/sites-available/letsencrypt.conf /etc/nginx/sites-enabled/letsencrypt.conf;
+service nginx reload;
 
 # Script to renew generated certs
 echo '#!/bin/sh
@@ -45,5 +46,5 @@ echo "Let's encrypt Certs will be save in /etc/letsencrypt/live/"
 
 # enable nginx ssl
 sed -i "s|^\(ssl .*\)off;$|\1on;|"  /etc/nginx/conf.d/sslproxy.conf
-ln -s /etc/nginx/sites-available/backend.conf /etc/nginx/sites-enabled/backend.conf
+#ln -s /etc/nginx/sites-available/backend.conf /etc/nginx/sites-enabled/backend.conf
 #service nginx reload
