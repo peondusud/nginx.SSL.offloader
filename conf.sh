@@ -18,31 +18,30 @@ else
     openssl dhparam -inform PEM -in /etc/nginx/ssl/dhparam.pem -check
 fi
 
-
 # Let's encrypt part
 apt-get install git
 git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt --depth=1
 mkdir -p /etc/letsencrypt/configs
+mkdir -p /var/log/letsencrypt
 cp -f ${SHELL_PATH}/letsencrypt.ini /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<mail>|${MYMAIL}|" /etc/letsencrypt/configs/${MYDOMAIN}.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|<domain>|${MYDOMAIN}|" /etc/nginx/sites-available/backend.conf
+
 # disable nginx ssl
 sed -i 's|^\(ssl\s*\)on;$|\1off;|' /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|^\(ssl_certificate\)|#\1|g" /etc/nginx/conf.d/sslproxy.conf
 ln -s /etc/nginx/sites-available/letsencrypt.conf /etc/nginx/sites-enabled/letsencrypt.conf;
-grep "ssl " /etc/nginx/conf.d/sslproxy.conf
 service nginx restart;
 
 # Script to renew generated certs
 echo '#!/bin/sh
-for conf in $(ls /etc/letsencrypt/configs/*.conf); do
-  /opt/letsencrypt/letsencrypt-auto renew --config "$conf" certonly
-done
+/opt/letsencrypt/letsencrypt-auto renew >> /var/log/letsencrypt/renew.log
 service nginx reload' > /etc/cron.monthly/renew_certs
 
-/opt/letsencrypt/letsencrypt-auto certonly --config /etc/letsencrypt/configs/${MYDOMAIN}.conf  
+# generate certs
+/opt/letsencrypt/letsencrypt-auto certonly --config /etc/letsencrypt/configs/${MYDOMAIN}.conf
 echo "Let's encrypt Certs will be save in /etc/letsencrypt/live/"
 
 # enable nginx ssl
@@ -50,3 +49,9 @@ sed -i "s|^\(ssl .*\)off;$|\1on;|"  /etc/nginx/conf.d/sslproxy.conf
 sed -i "s|^#\(ssl_certificate\)|\1|g" /etc/nginx/conf.d/sslproxy.conf
 ln -s /etc/nginx/sites-available/backend.conf /etc/nginx/sites-enabled/backend.conf
 service nginx reload
+
+# now use official letsencrypt server
+#comment staging server
+sed -i 's|^\(server = .*staging.*\)$|#\1|' /etc/letsencrypt/configs/${MYDOMAIN}.conf
+#uncoment official server
+sed -i 's|^#\(server = .*v01.*\)$|\1|' etc/letsencrypt/configs/${MYDOMAIN}.conf
