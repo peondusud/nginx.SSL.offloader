@@ -10,6 +10,11 @@ cp -rf ${SHELL_PATH}/nginx/* /etc/nginx/
 mkdir -p /var/spool/nginx
 mkdir -p /var/www/letsencrypt
 mkdir -p /etc/nginx/ssl
+mkdir -p /etc/nginx/passwd/
+#use Bcrypt
+htpasswd -c -B /etc/nginx/passwd/seedbox_passwd peon
+chmod 640 /etc/nginx/passwd/*
+chown www-data:www-data /etc/nginx/passwd/*
 
 if [ ! -f /etc/nginx/ssl/dhparam.pem ]; then
     openssl dhparam -out /etc/nginx/ssl/dhparam.pem 1024
